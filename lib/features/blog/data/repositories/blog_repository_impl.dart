@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blog/core/constants/constants.dart';
 import 'package:blog/core/error/exceptions.dart';
 import 'package:blog/core/error/faillures.dart';
 import 'package:blog/core/network/connection_checker.dart';
@@ -66,7 +67,7 @@ class BlogRepositoryImpl implements BlogRepository {
         return right(blogs);
       }
       final blogs = await blogRemoteDataSource.getAllBlogs();
-            blogLocalDataSource.uploadLocalBlogs(blogs: blogs);
+      blogLocalDataSource.uploadLocalBlogs(blogs: blogs);
       return right(blogs);
     } on ServerException catch (e) {
       return left(Failure(e.message));
