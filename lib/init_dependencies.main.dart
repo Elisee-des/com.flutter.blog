@@ -5,8 +5,11 @@ final serviceLocator = GetIt.instance;
 Future<void> initDependencies() async {
   _initAuth();
   _initBlog();
+
   final supabase = await Supabase.initialize(
-      url: AppSecrets.supabaseUrl, anonKey: AppSecrets.supabaseAnonKey);
+    url: AppSecrets.supabaseUrl,
+    anonKey: AppSecrets.supabaseAnonKey,
+  );
 
   Hive.defaultDirectory = (await getApplicationDocumentsDirectory()).path;
 
@@ -16,10 +19,12 @@ Future<void> initDependencies() async {
     () => Hive.box(name: 'blogs'),
   );
 
-  serviceLocator.registerLazySingleton(() => AppUserCubit());
-
   serviceLocator.registerFactory(() => InternetConnection());
 
+  // core
+  serviceLocator.registerLazySingleton(
+    () => AppUserCubit(),
+  );
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(
       serviceLocator(),
@@ -28,28 +33,37 @@ Future<void> initDependencies() async {
 }
 
 void _initAuth() {
-  //Datasource
+  // Datasource
   serviceLocator
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(
         serviceLocator(),
       ),
     )
-
-    //Repositorye
+    // Repository
     ..registerFactory<AuthRepository>(
-        () => AuthRepositoryImpl(serviceLocator(), serviceLocator()))
-
-    //Usecases
-    ..registerFactory(() => UserSignUp(serviceLocator()))
-    ..registerFactory(() => UserLogin(serviceLocator()))
+      () => AuthRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
+    // Usecases
+    ..registerFactory(
+      () => UserSignUp(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => UserLogin(
+        serviceLocator(),
+      ),
+    )
     ..registerFactory(
       () => CurrentUser(
         serviceLocator(),
       ),
     )
-
-    //Bloc
+    // Bloc
     ..registerLazySingleton(
       () => AuthBloc(
         userSignUp: serviceLocator(),
@@ -61,8 +75,8 @@ void _initAuth() {
 }
 
 void _initBlog() {
+  // Datasource
   serviceLocator
-    //Datasource
     ..registerFactory<BlogRemoteDataSource>(
       () => BlogRemoteDataSourceImpl(
         serviceLocator(),

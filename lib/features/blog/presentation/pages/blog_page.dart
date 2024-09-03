@@ -35,8 +35,10 @@ class _BlogPageState extends State<BlogPage> {
             onPressed: () {
               Navigator.push(context, AddNewBlogPage.route());
             },
-            icon: const Icon(CupertinoIcons.add_circled),
-          )
+            icon: const Icon(
+              CupertinoIcons.add_circled,
+            ),
+          ),
         ],
       ),
       body: BlocConsumer<BlogBloc, BlogState>(

@@ -5,6 +5,7 @@ import 'package:blog/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog/features/auth/presentation/pages/login_page.dart';
 import 'package:blog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:blog/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,33 +43,50 @@ class _SignUpPageState extends State<SignUpPage> {
           listener: (context, state) {
             if (state is AuthFailure) {
               showSnackBar(context, state.message);
+            } else if (state is AuthSuccess) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                BlogPage.route(),
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {
             if (state is AuthLoading) {
               return const Loader();
             }
+
             return Form(
               key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Sign Up",
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                    'Sign Up.',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  AuthField(hintText: "Name", controller: nameController),
-                  const SizedBox(height: 20),
-                  AuthField(hintText: "Email", controller: emailController),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   AuthField(
-                    hintText: "Password",
+                    hintText: 'Name',
+                    controller: nameController,
+                  ),
+                  const SizedBox(height: 15),
+                  AuthField(
+                    hintText: 'Email',
+                    controller: emailController,
+                  ),
+                  const SizedBox(height: 15),
+                  AuthField(
+                    hintText: 'Password',
                     controller: passwordController,
                     isObscureText: true,
                   ),
                   const SizedBox(height: 20),
                   AuthGradientButton(
-                    buttonText: "Sign Up",
+                    buttonText: 'Sign Up',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
@@ -78,8 +96,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 name: nameController.text.trim(),
                               ),
                             );
-
-                        showSnackBar(context, "Compte crée avec succès.");
                       }
                     },
                   ),

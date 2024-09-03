@@ -2,7 +2,7 @@ import 'package:blog/core/common/widgets/loader.dart';
 import 'package:blog/core/theme/app_pallete.dart';
 import 'package:blog/core/utils/show_snackbar.dart';
 import 'package:blog/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:blog/features/auth/presentation/pages/sign_up_page.dart';
+import 'package:blog/features/auth/presentation/pages/signup_page.dart';
 import 'package:blog/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blog/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:blog/features/blog/presentation/pages/blog_page.dart';
@@ -52,25 +52,33 @@ class _LoginPageState extends State<LoginPage> {
             if (state is AuthLoading) {
               return const Loader();
             }
+
             return Form(
               key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Sign in",
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                    'Sign In.',
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  AuthField(hintText: "Email", controller: emailController),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   AuthField(
-                    hintText: "Password",
+                    hintText: 'Email',
+                    controller: emailController,
+                  ),
+                  const SizedBox(height: 15),
+                  AuthField(
+                    hintText: 'Password',
                     controller: passwordController,
                     isObscureText: true,
                   ),
                   const SizedBox(height: 20),
                   AuthGradientButton(
-                    buttonText: "Sign Up",
+                    buttonText: 'Sign in',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
@@ -93,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: Theme.of(context).textTheme.titleMedium,
                         children: [
                           TextSpan(
-                            text: 'Sign In',
+                            text: 'Sign Up',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium

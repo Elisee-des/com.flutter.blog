@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:blog/core/error/faillures.dart';
-import 'package:blog/features/blog/domain/entities/blog.dart';
+import 'package:blog/core/error/failures.dart';
 import 'package:blog/core/usecase/usecase.dart';
+import 'package:blog/features/blog/domain/entities/blog.dart';
 import 'package:blog/features/blog/domain/repositories/blog_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UploadBlog implements Usecase<Blog, UploadBlogParams> {
+class UploadBlog implements UseCase<Blog, UploadBlogParams> {
   final BlogRepository blogRepository;
   UploadBlog(this.blogRepository);
 

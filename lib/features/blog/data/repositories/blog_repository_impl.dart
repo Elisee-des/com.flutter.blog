@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:blog/core/constants/constants.dart';
 import 'package:blog/core/error/exceptions.dart';
-import 'package:blog/core/error/faillures.dart';
+import 'package:blog/core/error/failures.dart';
 import 'package:blog/core/network/connection_checker.dart';
 import 'package:blog/features/blog/data/datasources/blog_local_data_source.dart';
 import 'package:blog/features/blog/data/datasources/blog_remote_data_source.dart';
